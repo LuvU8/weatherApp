@@ -1,1 +1,1 @@
-export {default as MainIndicatorPage} from "./MainIndicatorPage"
+export { default as MainIndicatorPage } from "./MainIndicatorPage";

@@ -4,14 +4,12 @@ const getCityNameFromBrowser = () => {
   return new Promise((resolve, reject) => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        async function (position) {
-          const latitude = "56.0319973"//position.coords.latitude;
-          const longitude = "92.7683397"//position.coords.longitude;
+        async function () {
+          const latitude = "56.0319973"; //position.coords.latitude;
+          const longitude = "92.7683397"; //position.coords.longitude;
 
           try {
-            const reverseResponse = await fetch(
-              `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}&api_key=${API_KEY}&format=json`
-            );
+            const reverseResponse = await fetch(`https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}&api_key=${API_KEY}&format=json`);
             const reverseData = await reverseResponse.json();
             const city = reverseData.address.city;
             console.log("City:", city);
@@ -24,7 +22,7 @@ const getCityNameFromBrowser = () => {
         function (error) {
           console.error("Error getting location:", error);
           reject(error);
-        }
+        },
       );
     } else {
       console.error("Geolocation is not supported in your browser");

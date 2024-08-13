@@ -15,8 +15,8 @@ const LocationIndicator = () => {
       try {
         const city = await getCityNameFromBrowser();
         dispatch(setCityName(city));
-      } catch (error: any) {
-        dispatch(setError(error.message));
+      } catch (error: unknown) {
+        dispatch(setError((error as Error).message));
       } finally {
         dispatch(setLoading(false));
       }

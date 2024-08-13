@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { StatusState } from './types';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { StatusState } from "./types";
 
 const initialStatusState: StatusState = {
   loading: false,
@@ -7,7 +7,7 @@ const initialStatusState: StatusState = {
 };
 
 const statusSlice = createSlice({
-  name: 'status',
+  name: "status",
   initialState: initialStatusState,
   reducers: {
     setLoading: (state, action: PayloadAction<boolean>) => {

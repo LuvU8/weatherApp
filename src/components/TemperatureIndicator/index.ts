@@ -1,1 +1,1 @@
-export {default as TemperatureIndicator} from "./TemperatureIndicator"
+export { default as TemperatureIndicator } from "./TemperatureIndicator";

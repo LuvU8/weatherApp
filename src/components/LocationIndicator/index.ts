@@ -1,1 +1,1 @@
-export {default as LocationIndicator} from "./LocationIndicator"
+export { default as LocationIndicator } from "./LocationIndicator";
