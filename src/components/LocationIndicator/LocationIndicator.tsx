@@ -1,37 +1,23 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../store/store";
-import { setCityName } from "../../store/locationSlice/locationSlice";
-import { setLoading, setError } from "../../store/statusSlice/statusSlice";
-import getCityNameFromBrowser from "../../api/cityApi";
+import React, { useState, useEffect } from "react";
 
-const LocationIndicator = () => {
-  const cityName = useSelector((state: RootState) => state.location.cityName);
-  const dispatch = useDispatch();
+const LocationIndicator = ({ cityName }: { cityName: string }) => {
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchCityName = async () => {
-      dispatch(setLoading(true));
-      try {
-        const city = await getCityNameFromBrowser();
-        dispatch(setCityName(city));
-      } catch (error: unknown) {
-        dispatch(setError((error as Error).message));
-      } finally {
-        dispatch(setLoading(false));
-      }
+    const fetchData = () => {
+      setTimeout(() => {
+        setLoading(false); 
+      }, 2000); 
     };
 
-    fetchCityName();
-  }, [dispatch]);
+    fetchData();
 
-  return (
-    <>
-      <div>
-        <h1>{cityName}</h1>
-      </div>
-    </>
-  );
+    return () => {
+      // Очистка ресурсов или отмена запроса при размонтировании компонента
+    };
+  }, []); // Пустой массив зависимостей означает, что эффект будет выполнен только один раз при монтировании компонента
+
+  return <div>{loading ? <p>Loading...</p> : <h1>{cityName}</h1>}</div>;
 };
 
 export default LocationIndicator;
