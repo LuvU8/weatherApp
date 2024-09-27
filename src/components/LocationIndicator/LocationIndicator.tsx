@@ -6,16 +6,14 @@ const LocationIndicator = ({ cityName }: { cityName: string }) => {
   useEffect(() => {
     const fetchData = () => {
       setTimeout(() => {
-        setLoading(false); 
-      }, 2000); 
+        setLoading(false);
+      }, 2000);
     };
 
     fetchData();
 
-    return () => {
-      // Очистка ресурсов или отмена запроса при размонтировании компонента
-    };
-  }, []); // Пустой массив зависимостей означает, что эффект будет выполнен только один раз при монтировании компонента
+    return () => {};
+  }, []);
 
   return <div>{loading ? <p>Loading...</p> : <h1>{cityName}</h1>}</div>;
 };

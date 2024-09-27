@@ -1,6 +1,6 @@
 import { CityState } from "./types";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import getCityNameFromBrowser from "../../api/location/route";
+import getCityNameFromBrowser from "../../shared/api/location/location";
 
 export const fetchCityFromBrowser = createAsyncThunk("city/fetchCityFromBrowser", async () => {
   const response = await getCityNameFromBrowser();
@@ -38,6 +38,5 @@ const citySlice = createSlice({
   },
 });
 
-// Экспортируем редьюсер и слайс
 export const { reducer: cityReducer } = citySlice;
 export default cityReducer;

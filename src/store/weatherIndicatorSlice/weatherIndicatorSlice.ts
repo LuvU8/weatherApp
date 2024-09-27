@@ -1,22 +1,23 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, SerializedError } from "@reduxjs/toolkit";
 import { WeatherState } from "./types";
-import { fetchWeather } from "../../api/weather/route";
+import { fetchWeather } from "../../shared/api/weather/weatherNew";
 
 const initialState: WeatherState = {
   current: null,
   hourly: null,
+  daily: null,
   loading: false,
   error: null,
+  errorMessage: "",
 };
 
 export const fetchWeatherData = createAsyncThunk(
   "weather/fetchWeatherData",
   async ({ latitude, longitude }: { latitude: number; longitude: number }) => {
     const data = await fetchWeather(latitude, longitude);
-    if (!data || !data.currentDayIndicators || !data.hourlyWeather) {
+    if (!data || !data.currentDayIndicators || !data.hourlyWeather || !data.dailyWeather) {
       throw new Error("Некорректные данные");
     }
-    console.log(data);
     return data;
   },
 );
@@ -24,23 +25,33 @@ export const fetchWeatherData = createAsyncThunk(
 const weatherIndicatorSlice = createSlice({
   name: "weather",
   initialState,
-  reducers: {},
+  reducers: {
+    clearError: (state) => {
+      state.error = null;
+      state.errorMessage = "";
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchWeatherData.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.errorMessage = "";
       })
       .addCase(fetchWeatherData.fulfilled, (state, action) => {
+        state.loading = false;
         state.current = action.payload.currentDayIndicators;
         state.hourly = action.payload.hourlyWeather;
-        state.loading = false;
+        state.daily = action.payload.dailyWeather;
       })
       .addCase(fetchWeatherData.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || "Ошибка загрузки погоды";
+        state.error = action.error; // Сохраняем ошибку
+        state.errorMessage = action.error.message || "Ошибка загрузки данных"; // Кастомное сообщение
       });
   },
 });
+
+export const { clearError } = weatherIndicatorSlice.actions;
 
 export default weatherIndicatorSlice.reducer;

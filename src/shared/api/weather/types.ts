@@ -2,6 +2,8 @@ export interface CurrentWeatherData {
   temperature: string | null;
   maxTemperature: string | null;
   minTemperature: string | null;
+  weatherCode: number;
+  isDay: number;
 }
 
 export interface CurrentWeatherUnits {
@@ -13,6 +15,7 @@ export interface CurrentWeatherUnits {
 export interface HourlyWeatherData {
   time: string[];
   temperature: number[];
+  weatherCode: number[];
 }
 
 export interface HourlyWeatherUnits {
@@ -22,9 +25,9 @@ export interface HourlyWeatherUnits {
 
 export type DailyWeatherData = {
   time: string[];
-  temperature: number[];
   maxTemperature: number[];
   minTemperature: number[];
+  weatherCode: number[];
 };
 
 export type DailyWeatherUnits = {
