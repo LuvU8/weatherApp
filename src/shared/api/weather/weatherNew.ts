@@ -4,7 +4,8 @@ import { roundValue } from "../../../utils/numbers";
 import { format } from "date-fns/fp/format";
 import { ensureUtcOffset, DateFormat } from "../../../utils/time";
 
-const API_URL = "https://api.open-meteo.com/v1/forecast";
+const API_URL = process.env.REACT_APP_WEATHER_API_URL;
+console.log(process.env);
 
 if (!API_URL) {
   throw new Error("Weather API URL is not defined");
